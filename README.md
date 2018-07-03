@@ -1,6 +1,6 @@
 # EPA_PublicData
 
-## For MacOS
+## Setting Up For MacOS
 
 ### 1. Clone the EPA_PublicData Repository
 
@@ -43,9 +43,28 @@ python __init_.py
 ```
 This process will take ~20 - 30 mins. You are done!
 
-## For windows
+## Setting Up For windows
 
-### 4. Setting up PostgreSQL
+### 1. Clone the EPA_PublicData Repository
+
+1. [Clone](https://help.github.com/articles/cloning-a-repository/) the repository.
+
+#### Option A: Github Desktop
+
+  1. If you don’t have a GitHub account, you’ll need to create one at [github.com](https://github.com). Since the database is a public repository, you’ll want to select a free public account (the option reads “Unlimited public repositories for free.”).
+  2. Once you’ve created an account and confirmed your email address, you’ll want to download and install the GitHub desktop client at [desktop.github.com](https://desktop.github.com/).
+  3. Use your new account credentials to log into the GitHub desktop client and select the option to clone a repository. Then, enter the URL `https://github.com/Barry8197/EPA_PublicData/`.
+  4. Once you've cloned the repository you can use the `Repository -> Show In Finder` option in the desktop Github app to obtain the location of the repository directory so that you find it using Terminal.
+
+#### Option B: Command line
+(This may require installing Git if you don't already have it.)
+```sh
+git clone https://github.com/Barry8197/EPA_PublicData.git
+```
+### 2. Installing Anaconda and Python packages
+1. Anaconda is a package manager, environment manager and Python distribution that contains many of the packages we’ll need to get the database up and running. Please select the Python 3.6 version on this [page](https://www.anaconda.com/download/). You can follow a step by step guide to completing the installation on the Graphical Installer [here](https://docs.continuum.io/anaconda/install/mac-os#macos-graphical-install).
+
+### 3. Setting up PostgreSQL
 
 
 1. [Download](https://www.postgresql.org/download/windows/) the Postgres installer.
@@ -64,8 +83,8 @@ The installer offers other things, like Stack Builder, that aren't necessary.
 5. Right click "Login/Group Roles" and add a new user called `catalyst`. Set a password for the `catalyst` user.
     - Grant the catalyst users permissions to login and create databases.
 6. Next, right-click on "databases" and open up the create database menu.
-Create the `ferc1` database with `catalyst` as the owner. This database will receive data from FERC form 1.
-7. Repeat #6 to create databases called `pudl`, `ferc1_test`, and `pudl_test`.
+Create the `eia860` database with `catalyst` as the owner. This database will receive all `eia860` data.
+7. Repeat #6 to create databases called `eia923`.
 8. Set up a `pgpass.conf` file with the password you set:
     - In Windows Explorer, type %APPDATA%\postgresql into the address bar and press enter. This should take you to something like c:\users\username\appdata\local\postgresql, but don't worry if that's not the exact path.
     - See if there's already a file called pgpass.conf
@@ -74,3 +93,14 @@ Create the `ferc1` database with `catalyst` as the owner. This database will rec
     - The contents of that line will be: `127.0.0.1:*:*:catalyst:the password you picked`, substituting in the password you picked for the catalyst user.
         - The line above says "whenever you try to connect to the local machine over IPv4 with the username `catalyst`, use the password ______".
     - Save and close.
+
+### 4. Import the data into PSQL
+
+1. Open a command prompt window (Start --> Program Files --> Accessories --> Command Prompt) 
+See other methods [here](https://www.quora.com/How-do-I-open-terminal-in-windows)
+2. Navigate to EPA_PublicData --> cd /Users/youruser/EPA_PublicData
+3. run the python script
+```sh
+python __init_.py
+```
+This process will take ~20 - 30 mins. You are done!
