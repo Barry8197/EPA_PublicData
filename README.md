@@ -16,7 +16,7 @@
 #### Option B: Command line
 (This may require installing Git if you don't already have it.)
 ```sh
-git clone git@github.com:Barry8197/EPA_PublicData.git
+git clone https://github.com/Barry8197/EPA_PublicData.git
 ```
 
 ### 2. Installing Anaconda and Python packages
