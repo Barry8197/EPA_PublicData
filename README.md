@@ -57,7 +57,7 @@ This process will take ~20 - 30 mins. You are done!
   4. Once you've cloned the repository you can use the `Repository -> Show In Finder` option in the desktop Github app to obtain the location of the repository directory so that you find it using Terminal.
 
 #### Option B: Command line
-(This may require installing Git if you don't already have it.)
+(This may require [installing](https://gitforwindows.org/) Git if you don't already have it.)
 ```sh
 git clone https://github.com/Barry8197/EPA_PublicData.git
 ```
