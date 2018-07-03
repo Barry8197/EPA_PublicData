@@ -39,7 +39,7 @@ echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/pat
 2. Navigate to EPA_PublicData --> cd /Users/youruser/EPA_PublicData
 3. run the python script
 ```sh
-python __init_.py
+python __init__.py
 ```
 This process will take ~20 - 30 mins. You are done!
 
@@ -101,6 +101,6 @@ See other methods [here](https://www.quora.com/How-do-I-open-terminal-in-windows
 2. Navigate to EPA_PublicData --> cd /Users/youruser/EPA_PublicData
 3. run the python script
 ```sh
-python __init_.py
+python __init__.py
 ```
 This process will take ~20 - 30 mins. You are done!
