@@ -1,7 +1,6 @@
 import requests
 import zipfile
 import io
-import urllib3
 import os
 import csv
 import pandas as pd
@@ -9,6 +8,7 @@ import numpy as np
 import xlrd
 import unicodecsv
 import shutil
+import warnings
 
 from Constants import Years_eia860, eia860_url, Years_eia923, eia923_url
 
@@ -17,8 +17,11 @@ from os.path import expanduser
 
 
 def eia860():
+    warnings.warn("deprecated", DeprecationWarning)
     path = os.getcwd()
+    print("Fetching data for years")
     for item in Years_eia860:
+        print(item)
         os.mkdir(item)
         os.chdir("%s/%s" % (path,item))
         if item[0] == 'a':
@@ -27,6 +30,7 @@ def eia860():
             url = ("%seia860b/eia860%s.zip" % (eia860_url, item))
         else:
             url = ("%sxls/eia860%s.zip" % (eia860_url, item))
+            
         r = requests.get(url)
         z = zipfile.ZipFile(io.BytesIO(r.content))
         z.extractall()
@@ -44,13 +48,58 @@ def eia860():
             
         database = os.listdir()
         for table in database:
-            print(table)
             if table.endswith(".csv"):
-                table_create(table,item,'mitei')
+                table_create(table,item,'eia860')
                 
         
         os.chdir(path)
     for item in Years_eia860:
+        shutil.rmtree("%s/%s" % (path,item))
+        
+def eia923():
+    warnings.warn("deprecated", DeprecationWarning)
+    path = os.getcwd()
+    print("Fetching data for years...")
+    for item in Years_eia923:
+        print(item)
+        os.mkdir(item)
+        os.chdir("%s/%s" % (path,item))
+        if item in Years_eia923[:2]:
+            url = ("%sxls/f923_%s.zip" % (eia923_url, item))
+        elif item in Years_eia923[2:11]:
+            url = ("%sarchive/xls/f923_%s.zip" % (eia923_url, item))
+        elif item in Years_eia923[11:18]:
+            url = ("%sarchive/xls/f906920_%s.zip" % (eia923_url, item))
+        else :
+            url = ("%sarchive/xls/utility/f759%s.xls" % (eia923_url, item))
+        r = requests.get(url)
+        if url.endswith(".zip"):
+            z = zipfile.ZipFile(io.BytesIO(r.content))
+            z.extractall()
+        else :
+            output = open('f759%s.xls' % (item), 'wb')
+            output.write(r.content)
+            output.close()
+        
+        test = os.listdir()
+        for data in test:
+            r = csv.reader(open(data))
+            if data.endswith(".xlsx") :
+                csv_name = data.replace(".xlsx" , ".csv")
+                xls2csv(data,csv_name)
+            elif data.endswith(".xls") :
+                csv_name = data.replace(".xls" , ".csv")
+                xls2csv(data,csv_name)
+                
+            
+        database = os.listdir()
+        for table in database:
+            if table.endswith(".csv"):
+                table_create(table,item,'eia923')
+                
+        
+        os.chdir(path)
+    for item in Years_eia923:
         shutil.rmtree("%s/%s" % (path,item))
         
 def xls2csv (xls_filename, csv_filename):
@@ -93,11 +142,9 @@ def table_create(table,item,dB):
     engine = create_engine('postgresql://%s:%s@%s/%s' % (user, password[:-1], port, dB),paramstyle="format")
 
 
-    rename = no_repeat(table,item)
-    title = naming(rename)
-    print(title)
-    df.to_sql(title, engine,  )
-    
+    rename = naming(table)
+    title = no_repeat(rename,item)
+    df.to_sql(title, engine )
     
 def header(kwargs):
     array = np.array(kwargs)
@@ -111,72 +158,30 @@ def header(kwargs):
 
     header = count
     return header
-    
+
 def naming(item):
+    if len(item) >= 63:
+        item = item[:18] + item[-25:]
     for i in item:
         if i.isnumeric():
-            item = item.lstrip(i + "__")
+            item = item.lstrip(i + "__" + "_")
         elif i == ' ' :
             item = item.replace(i, "_")
-        elif item.endswith('.csv'):
-            item = item.rstrip(".csv")
-    if len(item) >= 63:
-        item = item[:20] + item[-20:]
-        
+ 
     return item 
 
-def no_repeat(kwargs,year) :
-        count = 0
-        for i in kwargs:
-            if i.isnumeric():
-                count +=1
-        if count < 2:
-            append = "_"+year[-2] + year[-1] + '.csv'
-            kwargs = kwargs.replace(".csv",append)
-       
-        return kwargs
+def no_repeat(item,year) :
+    check1 = False
+    for i in range(len(item)-4):
+        check = item[i] + item[i+1] + item[i+2] + item[i+3]
+        if check.isnumeric():
+            check1 = True
+
+    if check1 == False:
+        year = "_" + year[-2] + year[-1]
+        item = item.replace('.csv',year)
+    if item.endswith('.csv'):
+        item = item[:-4]
     
-def eia923():
-    path = os.getcwd()
-    for item in Years_eia923:
-        os.mkdir(item)
-        os.chdir("%s/%s" % (path,item))
-        if item in Years_eia923[:2]:
-            url = ("%sxls/f923_%s.zip" % (eia923_url, item))
-        elif item in Years_eia923[2:11]:
-            url = ("%sarchive/xls/f923_%s.zip" % (eia923_url, item))
-        elif item in Years_eia923[11:18]:
-            url = ("%sarchive/xls/f906920_%s.zip" % (eia923_url, item))
-        else :
-            url = ("%sarchive/xls/utility/f759%s.xls" % (eia923_url, item))
-        r = requests.get(url)
-        if url.endswith(".zip"):
-            z = zipfile.ZipFile(io.BytesIO(r.content))
-            z.extractall()
-        else :
-            output = open('f759%s.xls' % (item), 'wb')
-            output.write(r.content)
-            output.close()
-        
-        test = os.listdir()
-        for data in test:
-            r = csv.reader(open(data))
-            if data.endswith(".xlsx") :
-                csv_name = data.replace(".xlsx" , ".csv")
-                xls2csv(data,csv_name)
-            elif data.endswith(".xls") :
-                csv_name = data.replace(".xls" , ".csv")
-                xls2csv(data,csv_name)
-                
-            
-        database = os.listdir()
-        for table in database:
-            print(table)
-            if table.endswith(".csv"):
-                table_create(table,item,'eia923')
-                
-        
-        os.chdir(path)
-    for item in Years:
-        shutil.rmtree("%s/%s" % (path,item))
-    
+    return item
+
