@@ -2,7 +2,27 @@
 
 ## For MacOS
 
-### 4. Setting up PostgreSQL
+### 1. Clone the EPA_PublicData Repository
+
+1. [Clone](https://help.github.com/articles/cloning-a-repository/) the repository.
+
+#### Option A: Github Desktop
+
+  1. If you don’t have a GitHub account, you’ll need to create one at [github.com](https://github.com). Since the database is a public repository, you’ll want to select a free public account (the option reads “Unlimited public repositories for free.”).
+  2. Once you’ve created an account and confirmed your email address, you’ll want to download and install the GitHub desktop client at [desktop.github.com](https://desktop.github.com/).
+  3. Use your new account credentials to log into the GitHub desktop client and select the option to clone a repository. Then, enter the URL `https://github.com/Barry8197/EPA_PublicData/`.
+  4. Once you've cloned the repository you can use the `Repository -> Show In Finder` option in the desktop Github app to obtain the location of the repository directory so that you find it using Terminal.
+
+#### Option B: Command line
+(This may require installing Git if you don't already have it.)
+```sh
+git clone git@github.com:Barry8197/EPA_PublicData.git
+```
+
+### 2. Installing Anaconda and Python packages
+1. Anaconda is a package manager, environment manager and Python distribution that contains many of the packages we’ll need to get the database up and running. Please select the Python 3.6 version on this [page](https://www.anaconda.com/download/). You can follow a step by step guide to completing the installation on the Graphical Installer [here](https://docs.continuum.io/anaconda/install/mac-os#macos-graphical-install).
+
+### 3. Setting up PostgreSQL
 
 1. Now that we have all the required packages installed, we can install the PostgreSQL database. It’s most straightforward to set up through Postgres.app, which is available [here](http://postgresapp.com/).
 2. After installing PostgreSQL, open the application. Then we’ll set up command line access to PostgreSQL. In your terminal window, run `sudo mkdir -p /etc/paths.d &&
@@ -12,6 +32,16 @@ echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/pat
   2. Run `CREATE DATABASE eia860;` to create the database that will receive data for all eia860.
   3. Run `CREATE DATABASE eia923;` to create the database that will receive data for all eia923.
   4. Run `\q` to exit the PostgreSQL prompt.
+  
+### 4. Import the data into PSQL
+
+1. Open a terminal window (cmd + spacebar --> 'Terminal')
+2. Navigate to EPA_PublicData --> cd /Users/youruser/EPA_PublicData
+3. run the python script
+```sh
+python __init_.py
+```
+This process will take ~20 - 30 mins. You are done!
 
 ## For windows
 
