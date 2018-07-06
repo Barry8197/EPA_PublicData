@@ -51,7 +51,7 @@ This process will take ~30 - 40 mins.
 ```sh
 python Automated_Update.py
 ```
-This will automatically update the database at 10am on the first day of every month
+This will automatically update the database at 10am on the first day of every month.
 You're done!!
 
 ## Setting Up For windows
@@ -124,5 +124,5 @@ This process will take ~30 - 40 mins.
 ```sh
 python Automated_Update.py
 ```
-This will automatically update the database at 10am on the first day of every month
+This will automatically update the database at 10am on the first day of every month.
 You're done!!
