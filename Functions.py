@@ -7,21 +7,19 @@ import pandas as pd
 import numpy as np
 import xlrd
 import unicodecsv
-import shutil
 import warnings
-
 from Constants import Years_eia860, eia860_url, Years_eia923, eia923_url
-
-from os.path import expanduser
-
 
 
 def eia860():
+    file_name = "Automated_Output.txt"
+    output = open(file_name, 'a')
+    output.write("Beginning eia923 imports from years 1970+\n")
     warnings.warn("deprecated", DeprecationWarning)
     path = os.getcwd()
-    print("Fetching data for years")
+    output.write("Fetching data for years\n")
     for item in Years_eia860:
-        print(item)
+        output.write("%s\n" % (item))
         os.mkdir(item)
         os.chdir("%s/%s" % (path,item))
         if item[0] == 'a':
@@ -52,16 +50,15 @@ def eia860():
                 table_create(table,item,'eia860')
                 
         
-        os.chdir(path)
-    for item in Years_eia860:
-        shutil.rmtree("%s/%s" % (path,item))
-        
 def eia923():
+    file_name = "Automated_Output.txt"
+    output = open(file_name, 'a')
+    output.write("Beginning eia860 imports from years 1990+\n")
     warnings.warn("deprecated", DeprecationWarning)
     path = os.getcwd()
-    print("Fetching data for years...")
+    output.write("Fetching data for years...\n")
     for item in Years_eia923:
-        print(item)
+        output.write("%s\n" % (item))
         os.mkdir(item)
         os.chdir("%s/%s" % (path,item))
         if item in Years_eia923[:2]:
@@ -98,10 +95,6 @@ def eia923():
                 table_create(table,item,'eia923')
                 
         
-        os.chdir(path)
-    for item in Years_eia923:
-        shutil.rmtree("%s/%s" % (path,item))
-        
 def xls2csv (xls_filename, csv_filename):
     # Converts an Excel file to a CSV file.
     # If the excel file has multiple worksheets, only the first worksheet is converted.
@@ -130,6 +123,7 @@ def xls2csv (xls_filename, csv_filename):
     os.remove(xls_filename)
     
 def table_create(table,item,dB):
+    from os.path import expanduser
     dp = pd.read_csv(table,header=None)
     start = header(dp)
     df = pd.read_csv(table, header = start)
@@ -184,4 +178,5 @@ def no_repeat(item,year) :
         item = item[:-4]
     
     return item
+
 
