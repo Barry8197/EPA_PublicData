@@ -49,7 +49,7 @@ This process will take ~30 - 40 mins.
 2. Run the python script
 
 ```sh
-python __init__.py
+python Automated_Update.py
 ```
 You're done!!
 
@@ -121,6 +121,6 @@ This process will take ~20 - 30 mins.
 2. Run the python script
 
 ```sh
-python __init__.py
+python Automated_Update.py
 ```
 You're done!!
