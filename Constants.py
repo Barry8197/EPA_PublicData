@@ -22,7 +22,8 @@ def years_eia923():
         if i in ['99' , '98', '97', '96']:
             years.append('19' + i + 'mu')
         years.append('19' + i + 'u')
-        
+    
+    years[1] = '2017er'
     return years
 
 def years_eia860() :    

@@ -14,11 +14,13 @@ from Constants import Years_eia860, eia860_url, Years_eia923, eia923_url
 def eia860():
     file_name = "Automated_Output.txt"
     output = open(file_name, 'a')
-    output.write("Beginning eia923 imports from years 1970+\n")
+    output.write("Beginning eia860 imports from years 1990+\n")
     warnings.warn("deprecated", DeprecationWarning)
     path = os.getcwd()
-    output.write("Fetching data for years\n")
+    output.write("Fetching data for years...\n")
+    output.close()
     for item in Years_eia860:
+        output = open(file_name, 'a')
         output.write("%s\n" % (item))
         os.mkdir(item)
         os.chdir("%s/%s" % (path,item))
@@ -49,15 +51,19 @@ def eia860():
             if table.endswith(".csv"):
                 table_create(table,item,'eia860')
                 
+        output.close()
+        os.chdir(path)
         
 def eia923():
     file_name = "Automated_Output.txt"
     output = open(file_name, 'a')
-    output.write("Beginning eia860 imports from years 1990+\n")
+    output.write("Beginning eia923 imports from years 1970+\n")
     warnings.warn("deprecated", DeprecationWarning)
     path = os.getcwd()
     output.write("Fetching data for years...\n")
+    output.close()
     for item in Years_eia923:
+        output = open(file_name, 'a')
         output.write("%s\n" % (item))
         os.mkdir(item)
         os.chdir("%s/%s" % (path,item))
@@ -94,7 +100,9 @@ def eia923():
             if table.endswith(".csv"):
                 table_create(table,item,'eia923')
                 
-        
+        output.close()
+        os.chdir(path)
+                
 def xls2csv (xls_filename, csv_filename):
     # Converts an Excel file to a CSV file.
     # If the excel file has multiple worksheets, only the first worksheet is converted.
