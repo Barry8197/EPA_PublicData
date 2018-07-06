@@ -114,7 +114,7 @@ See other methods [here](https://www.quora.com/How-do-I-open-terminal-in-windows
 ```sh
 python __init__.py
 ```
-This process will take ~20 - 30 mins. 
+This process will take ~30 - 40 mins. 
 
 ### 5. Automatically update database
 
