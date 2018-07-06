@@ -37,11 +37,21 @@ echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/pat
 
 1. Open a terminal window (cmd + spacebar --> 'Terminal')
 2. Navigate to EPA_PublicData --> cd /Users/youruser/EPA_PublicData
-3. run the python script
+3. Run the python script
 ```sh
 python __init__.py
 ```
-This process will take ~20 - 30 mins. You are done!
+This process will take ~30 - 40 mins. 
+
+### 5. Automatically update database
+
+1. Navigate to EPA_PublicData --> cd /Users/youruser/EPA_PublicData
+2. Run the python script
+
+```sh
+python __init__.py
+```
+You're done!!
 
 ## Setting Up For windows
 
@@ -99,8 +109,18 @@ Create the `eia860` database with `catalyst` as the owner. This database will re
 1. Open a command prompt window (Start --> Program Files --> Accessories --> Command Prompt) 
 See other methods [here](https://www.quora.com/How-do-I-open-terminal-in-windows)
 2. Navigate to EPA_PublicData --> cd /Users/youruser/EPA_PublicData
-3. run the python script
+3. Run the python script
 ```sh
 python __init__.py
 ```
-This process will take ~20 - 30 mins. You are done!
+This process will take ~20 - 30 mins. 
+
+### 5. Automatically update database
+
+1. Navigate to EPA_PublicData --> cd /Users/youruser/EPA_PublicData
+2. Run the python script
+
+```sh
+python __init__.py
+```
+You're done!!
