@@ -87,7 +87,7 @@ Remember this.
 In the installation, do install you should install PostgreSQL server and pgAdmin 4.
 The installer offers other things, like Stack Builder, that aren't necessary.
 
-3. We can now set up our PostgreSQL databases. Open the pgAdmin 4 program.
+3. Navigate your applications until you find Postgres. Open pgAdmin 4.
 
 
 4. In pgAdmin 4, log into the `postgres` account.
