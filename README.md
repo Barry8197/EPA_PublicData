@@ -73,7 +73,7 @@ You're done!!
 git clone https://github.com/Barry8197/EPA_PublicData.git
 ```
 ### 2. Installing Anaconda and Python packages
-1. Anaconda is a package manager, environment manager and Python distribution that contains many of the packages we’ll need to get the database up and running. Please select the Python 3.6 version on this [page](https://www.anaconda.com/download/). You can follow a step by step guide to completing the installation on the Graphical Installer [here](https://docs.continuum.io/anaconda/install/mac-os#macos-graphical-install).
+1. Anaconda is a package manager, environment manager and Python distribution that contains many of the packages we’ll need to get the database up and running. Please select the Python 3.6 version on this [page](https://www.anaconda.com/download/). You can follow a step by step guide to completing the installation on the Graphical Installer [here](https://docs.continuum.io/anaconda/install/windows).
 
 ### 3. Setting up PostgreSQL
 
