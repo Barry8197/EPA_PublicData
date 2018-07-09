@@ -11,97 +11,91 @@ import warnings
 from Constants import Years_eia860, eia860_url, Years_eia923, eia923_url
 
 
-def eia860():
-    file_name = "Automated_Output.txt"
-    output = open(file_name, 'a')
-    output.write("Beginning eia860 imports from years 1990+\n")
+def eia860(item):
     warnings.warn("deprecated", DeprecationWarning)
     path = os.getcwd()
-    output.write("Fetching data for years...\n")
+    file_name = 'Automated_Output.txt'
+    output = open(file_name, 'a')
+    output.write("%s\n" % (item))
+    os.mkdir(item)
+    os.chdir("%s/%s" % (path,item))
+    if item[0] == 'a':
+        url = ("%seia860a/eia860%s.zip" % (eia860_url, item))
+    elif item[0] == 'b':
+        url = ("%seia860b/eia860%s.zip" % (eia860_url, item))
+    else:
+        url = ("%sxls/eia860%s.zip" % (eia860_url, item))
+
+    r = requests.get(url)
+    z = zipfile.ZipFile(io.BytesIO(r.content))
+    z.extractall()
+
+    test = os.listdir()
+    for data in test:
+        r = csv.reader(open(data))
+        if data.endswith(".xlsx") :
+            csv_name = data.replace(".xlsx" , ".csv")
+            xls2csv(data,csv_name)
+        elif data.endswith(".xls") :
+            csv_name = data.replace(".xls" , ".csv")
+            xls2csv(data,csv_name)
+
+
+    database = os.listdir()
+    for table in database:
+        if table.endswith(".csv"):
+            try :
+                table_create(table,item,'eia860')
+            except Exception:
+                output.write("")
+
     output.close()
-    for item in Years_eia860:
-        output = open(file_name, 'a')
-        output.write("%s\n" % (item))
-        os.mkdir(item)
-        os.chdir("%s/%s" % (path,item))
-        if item[0] == 'a':
-            url = ("%seia860a/eia860%s.zip" % (eia860_url, item))
-        elif item[0] == 'b':
-            url = ("%seia860b/eia860%s.zip" % (eia860_url, item))
-        else:
-            url = ("%sxls/eia860%s.zip" % (eia860_url, item))
-            
-        r = requests.get(url)
+        
+def eia923(item):
+    warnings.warn("deprecated", DeprecationWarning)
+    path = os.getcwd()
+    file_name = 'Automated_Output.txt'
+    output = open(file_name, 'a')
+    output.write("%s\n" % (item))
+    os.mkdir(item)
+    os.chdir("%s/%s" % (path,item))
+    if item in Years_eia923[:2]:
+        url = ("%sxls/f923_%s.zip" % (eia923_url, item))
+    elif item in Years_eia923[2:11]:
+        url = ("%sarchive/xls/f923_%s.zip" % (eia923_url, item))
+    elif item in Years_eia923[11:18]:
+        url = ("%sarchive/xls/f906920_%s.zip" % (eia923_url, item))
+    else :
+        url = ("%sarchive/xls/utility/f759%s.xls" % (eia923_url, item))
+    r = requests.get(url)
+    if url.endswith(".zip"):
         z = zipfile.ZipFile(io.BytesIO(r.content))
         z.extractall()
-        
-        test = os.listdir()
-        for data in test:
-            r = csv.reader(open(data))
-            if data.endswith(".xlsx") :
-                csv_name = data.replace(".xlsx" , ".csv")
-                xls2csv(data,csv_name)
-            elif data.endswith(".xls") :
-                csv_name = data.replace(".xls" , ".csv")
-                xls2csv(data,csv_name)
-                
-            
-        database = os.listdir()
-        for table in database:
-            if table.endswith(".csv"):
-                table_create(table,item,'eia860')
-                
+    else :
+        output = open('f759%s.xls' % (item), 'wb')
+        output.write(r.content)
         output.close()
-        os.chdir(path)
-        
-def eia923():
-    file_name = "Automated_Output.txt"
-    output = open(file_name, 'a')
-    output.write("Beginning eia923 imports from years 1970+\n")
-    warnings.warn("deprecated", DeprecationWarning)
-    path = os.getcwd()
-    output.write("Fetching data for years...\n")
-    output.close()
-    for item in Years_eia923:
-        output = open(file_name, 'a')
-        output.write("%s\n" % (item))
-        os.mkdir(item)
-        os.chdir("%s/%s" % (path,item))
-        if item in Years_eia923[:2]:
-            url = ("%sxls/f923_%s.zip" % (eia923_url, item))
-        elif item in Years_eia923[2:11]:
-            url = ("%sarchive/xls/f923_%s.zip" % (eia923_url, item))
-        elif item in Years_eia923[11:18]:
-            url = ("%sarchive/xls/f906920_%s.zip" % (eia923_url, item))
-        else :
-            url = ("%sarchive/xls/utility/f759%s.xls" % (eia923_url, item))
-        r = requests.get(url)
-        if url.endswith(".zip"):
-            z = zipfile.ZipFile(io.BytesIO(r.content))
-            z.extractall()
-        else :
-            output = open('f759%s.xls' % (item), 'wb')
-            output.write(r.content)
-            output.close()
-        
-        test = os.listdir()
-        for data in test:
-            r = csv.reader(open(data))
-            if data.endswith(".xlsx") :
-                csv_name = data.replace(".xlsx" , ".csv")
-                xls2csv(data,csv_name)
-            elif data.endswith(".xls") :
-                csv_name = data.replace(".xls" , ".csv")
-                xls2csv(data,csv_name)
-                
-            
-        database = os.listdir()
-        for table in database:
-            if table.endswith(".csv"):
+
+    test = os.listdir()
+    for data in test:
+        r = csv.reader(open(data))
+        if data.endswith(".xlsx") :
+            csv_name = data.replace(".xlsx" , ".csv")
+            xls2csv(data,csv_name)
+        elif data.endswith(".xls") :
+            csv_name = data.replace(".xls" , ".csv")
+            xls2csv(data,csv_name)
+
+
+    database = os.listdir()
+    for table in database:
+        if table.endswith(".csv"):
+            try :
                 table_create(table,item,'eia923')
-                
-        output.close()
-        os.chdir(path)
+            except Exception:
+                output.write("")
+
+    output.close()
                 
 def xls2csv (xls_filename, csv_filename):
     # Converts an Excel file to a CSV file.
