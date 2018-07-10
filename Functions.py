@@ -122,7 +122,6 @@ def xls2csv (xls_filename, csv_filename):
             csv_out.writerow(sh.row_values(row_number))
 
         fh.close()
-    os.remove(xls_filename)
     
 def table_create(table,item,dB):
     from os.path import expanduser
