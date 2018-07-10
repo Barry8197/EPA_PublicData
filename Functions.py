@@ -135,7 +135,7 @@ def table_create(table,item,dB):
     from sqlalchemy import create_engine
     with open(expanduser('~/.pgpass'), 'r') as f:
         port,nothing, nothing, user, password = f.read().split(':')
-    engine = create_engine('postgresql://%s:%s@%s/%s' % (user, password[:-1], port, dB),paramstyle="format")
+    engine = create_engine('postgresql://%s:%s@%s/%s' % (user, password[:8], port, dB),paramstyle="format")
 
 
     rename = naming(table)
