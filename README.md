@@ -32,6 +32,17 @@ echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/pat
   2. Run `CREATE DATABASE eia860;` to create the database that will receive data for all eia860.
   3. Run `CREATE DATABASE eia923;` to create the database that will receive data for all eia923.
   4. Run `\q` to exit the PostgreSQL prompt.
+4. Set up a `pgpass.conf` file with the password you set:
+    - Open the terminal 
+    - Make sure you are in your home dirctory 
+    - Run the command line
+    ```sh
+    vi .pgpass 
+    ```
+    - Press i to enter the Insert mode
+    - Enter the line: `127.0.0.1:*:*:catalyst:the password you picked`, substituting in the password you picked for the catalyst user.
+        - The line above says "whenever you try to connect to the local machine over IPv4 with the username `catalyst`, use the password ______".
+    - Press escapw to exit insert mode and press ':wq' to save and exit.
   
 ### 4. Import the data into PSQL
 
@@ -97,7 +108,6 @@ The installer offers other things, like Stack Builder, that aren't necessary.
 Create the `eia860` database with `catalyst` as the owner. This database will receive all `eia860` data.
 7. Repeat #6 to create databases called `eia923`.
 8. Set up a `pgpass.conf` file with the password you set:
-    - In Windows Explorer, type %APPDATA%\postgresql into the address bar and press enter. This should take you to something like c:\users\username\appdata\local\postgresql, but don't worry if that's not the exact path.
     - Open a command prompt window (Start --> Program Files --> Accessories --> Command Prompt) 
     - Make sure you are in your home dirctory (
     - Run the command line
