@@ -42,7 +42,11 @@ echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/pat
     - Press i to enter the Insert mode
     - Enter the line: `127.0.0.1:*:*:catalyst:the password you picked`, substituting in the password you picked for the catalyst user.
         - The line above says "whenever you try to connect to the local machine over IPv4 with the username `catalyst`, use the password ______".
-    - Press escapw to exit insert mode and press ':wq' to save and exit.
+    - Press escape to exit insert mode and press
+    ``` sh
+    :wq 
+    ```
+    to save and exit.
   
 ### 4. Import the data into PSQL
 
