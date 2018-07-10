@@ -49,7 +49,7 @@ This process will take ~30 - 40 mins.
 2. Run the python script
 
 ```sh
-python Automated_Update.py
+python Automated_Update_For_MacOS.py
 ```
 This will automatically update the database at 10am on the first day of every month.
 You're done!!
@@ -125,7 +125,7 @@ This process will take ~30 - 40 mins.
 2. Run the python script
 
 ```sh
-python Automated_Update.py
+python Automated_Update_For_PC.py
 ```
-This will automatically update the database at 10am on the first day of every month.
+This will automatically update the database on the first monday of every month.
 You're done!!
