@@ -91,17 +91,20 @@ The installer offers other things, like Stack Builder, that aren't necessary.
 
 
 4. In pgAdmin 4, log into the `postgres` account.
-5. Right click "Login/Group Roles" and add a new user called `catalyst`. Set a password for the `catalyst` user.
+5. Right click "Login/Group Roles" and add a new user called `catalyst`. Set an 8-character (make sure the password is 8 characters long) password for the `catalyst` user.
     - Grant the catalyst users permissions to login and create databases.
 6. Next, right-click on "databases" and open up the create database menu.
 Create the `eia860` database with `catalyst` as the owner. This database will receive all `eia860` data.
 7. Repeat #6 to create databases called `eia923`.
 8. Set up a `pgpass.conf` file with the password you set:
     - In Windows Explorer, type %APPDATA%\postgresql into the address bar and press enter. This should take you to something like c:\users\username\appdata\local\postgresql, but don't worry if that's not the exact path.
-    - See if there's already a file called pgpass.conf
-    - If there is, open it. If not, use Notepad to create a text file called pgpass.conf in that folder.
-    - Whether it previously existed or not, you're going to add a new line.
-    - The contents of that line will be: `127.0.0.1:*:*:catalyst:the password you picked`, substituting in the password you picked for the catalyst user.
+    - Open a command prompt window (Start --> Program Files --> Accessories --> Command Prompt) 
+    - Make sure you are in your home dirctory (
+    - Run the command line
+    ```sh
+    notepad .pgpass 
+    ```
+    - Enter the line: `127.0.0.1:*:*:catalyst:the password you picked`, substituting in the password you picked for the catalyst user.
         - The line above says "whenever you try to connect to the local machine over IPv4 with the username `catalyst`, use the password ______".
     - Save and close.
 
