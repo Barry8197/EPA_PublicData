@@ -143,3 +143,8 @@ python Automated_Update_For_PC.py
 ```
 This will automatically update the database on the first monday of every month.
 You're done!!
+
+#GUI Interface
+EIA860_GUI.ipynb and EIA923_GUI.ipynb are two Jupyter notebooks which provide a user interface to explore the PSQL database on a per year basis. 
+
+Simply launch jupyter notebook through anaconda navigator and run all cells either (shift+enter or cell --> run all) 
